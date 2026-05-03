@@ -4,7 +4,7 @@
 
 Watch the skill in action — generating a complete 64×64 character spritesheet from a single prompt:
 
-https://github.com/tachikomared/character-animation-creator-skill/assets/showcase-720p.mp4
+<video src="assets/showcase-720p.mp4" controls width="100%"></video>
 
 ---
 

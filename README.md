@@ -2,9 +2,8 @@
 
 ## Showcase
 
-Watch the skill in action — generating a complete 64×64 character spritesheet from a single prompt:
-
-<video src="assets/showcase-720p.mp4" controls width="100%"></video>
+Watch the skill in action — generating a complete 64×64 character spritesheet from a single prompt:  
+**[View on X (Twitter)](https://x.com/smolekoma/status/2051075092847919276?s=20)**
 
 ---
 

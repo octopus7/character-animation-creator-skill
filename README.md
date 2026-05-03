@@ -1,5 +1,13 @@
 # Character Animation Creator Skill
 
+## Showcase
+
+Watch the skill in action — generating a complete 64×64 character spritesheet from a single prompt:
+
+https://github.com/tachikomared/character-animation-creator-skill/assets/showcase-720p.mp4
+
+---
+
 **For:** Codex (OpenAI) and GPT Web Agent  
 **Purpose:** Generate game-ready 64×64 pixel-art character spritesheets with 8-direction animations from a text prompt or reference image.
 

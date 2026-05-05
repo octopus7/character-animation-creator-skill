@@ -64,4 +64,5 @@ Default atlas: `384x1536`, 6 columns x 24 rows.
 - character must remain fully inside each `64x64` frame
 - use readable silhouette over high detail
 - use 16-48 colors unless the user asks for a strict palette
+- for final transparent output, prefer paired `#000000` and `#ffffff` background renders and derive alpha from the pair instead of using green chroma key
 

@@ -15,6 +15,8 @@ Default output is an atlas plus QA files:
 run/
   prompts/
   generated/
+  generated/character-sheet-black.png
+  generated/character-sheet-white.png
   final/character-sheet.png
   final/character-sheet-clean.png
   qa/validation.json
@@ -70,7 +72,34 @@ Preserve the canonical character identity exactly.
 Hard pixel-art edges, limited palette, readable silhouette.
 ```
 
-Use chroma key colors that do not appear in the character. Prefer `#00ff00`; use magenta if the character is green.
+For transparent final assets, prefer the black/white matte workflow below over chroma key. Chroma key is acceptable for rough previews, but it can leave colored matte spill around antialiased edges.
+
+## Black/White Matte Alpha Workflow
+
+For final transparent PNG output, generate two matching atlas images:
+
+1. `character-sheet-black.png` on a perfectly flat `#000000` background.
+2. `character-sheet-white.png` on a perfectly flat `#ffffff` background.
+
+Both images must have identical canvas size, grid, poses, frame positions, character identity, effects, and lighting. The only intended difference is the background color. Prompt both renders with:
+
+```text
+Same sprite atlas, same grid, same frames, same character, same poses.
+The only change is the perfectly flat solid background color: <#000000 or #ffffff>.
+No shadows, no floor, no glow on the background, no gradients, no texture, no labels, no frame borders.
+```
+
+Then derive alpha from the black/white pair:
+
+```bash
+python "<skill>/scripts/alpha_from_bw_pair.py" \
+  --black path/to/character-sheet-black.png \
+  --white path/to/character-sheet-white.png \
+  --output path/to/final/character-sheet-clean.png \
+  --mask-out path/to/qa/alpha-mask.png
+```
+
+This uses the matte equation `alpha = 1 - (white - black)` and recovers foreground color from the black-background render. It avoids green or magenta spill at sprite edges. Block acceptance if the black and white renders drift in pose, silhouette, frame positions, or effects, because alpha extraction assumes the two images are aligned.
 
 ## Pixel Cleanup
 
@@ -92,7 +121,7 @@ Do not over-clean faces, eyes, hands, or weapon tips. If strict cleanup damages 
 
 ## Chroma Key Handling
 
-For generated animation strips, remove chroma key in two passes:
+Use chroma key only when black/white matte output is unavailable or for quick preview assets. For generated animation strips, remove chroma key in two passes:
 
 1. Edge-connected flood removal: remove only chroma-key pixels connected to the image border.
 2. Final residue cleanup: after each frame is fitted into `64x64`, remove only near-exact key pixels.

@@ -1,0 +1,58 @@
+﻿{
+    "cell_size":  64,
+    "columns":  6,
+    "rows":  16,
+    "atlas_width":  384,
+    "atlas_height":  1024,
+    "direction_order":  [
+                            "south",
+                            "south-east",
+                            "east",
+                            "north-east",
+                            "north",
+                            "north-west",
+                            "west",
+                            "south-west"
+                        ],
+    "actions":  [
+                    {
+                        "name":  "walk",
+                        "frames":  6,
+                        "row_start":  0,
+                        "row_count":  8
+                    },
+                    {
+                        "name":  "attack",
+                        "frames":  6,
+                        "row_start":  8,
+                        "row_count":  8
+                    }
+                ],
+    "row_names":  [
+                      "walk-south",
+                      "walk-south-east",
+                      "walk-east",
+                      "walk-north-east",
+                      "walk-north",
+                      "walk-north-west",
+                      "walk-west",
+                      "walk-south-west",
+                      "attack-south",
+                      "attack-south-east",
+                      "attack-east",
+                      "attack-north-east",
+                      "attack-north",
+                      "attack-north-west",
+                      "attack-west",
+                      "attack-south-west"
+                  ],
+    "source_reference":  "pink twin-tail girl, white sailor-collar one-piece dress, bare legs, barefoot",
+    "generated_source":  "C:\\Users\\blendue\\.codex\\generated_images\\019df87b-16e3-7530-87d6-6c6e176078b8\\ig_09fd40ac4aa18bd80169f9fc813bc48191a2500cd2fb916ff7.png",
+    "chroma_key":  "#00ff00",
+    "chroma_removed":  {
+                           "edge_pixels_removed":  276602,
+                           "residue_pixels_removed":  1137,
+                           "opaque_pixels_after":  115477,
+                           "residue_pixels_after":  0
+                       }
+}

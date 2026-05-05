@@ -160,7 +160,26 @@ Block acceptance when near-exact chroma residue remains in fitted frames unless 
 
 ## Preview Export
 
-Prefer animated WebP for transparent previews. GIF is only a compatibility preview and must be exported carefully:
+Prefer static HTML previews that loop frames directly from the PNG atlas. This avoids GIF palette quantization and dithering, so colors match the source PNG.
+
+Use:
+
+```bash
+python "<skill>/scripts/export_png_loop_preview.py" \
+  --atlas path/to/character-sheet-clean.png \
+  --rows 8 \
+  --columns 6 \
+  --cell 128 \
+  --row-names south,south-east,east,north-east,north,north-west,west,south-west \
+  --title "Attack Preview" \
+  --out path/to/qa/previews/attack-preview.html \
+  --scale 2 \
+  --fps 10
+```
+
+This writes a standalone HTML file that can be opened directly in a browser. It draws frames from the transparent PNG atlas onto canvases over a checkerboard background.
+
+Animated WebP is acceptable for shareable previews. GIF is only a compatibility preview and must be exported carefully:
 
 - upscale frames with nearest-neighbor before previewing, usually `x4`
 - use a stable global palette for all frames

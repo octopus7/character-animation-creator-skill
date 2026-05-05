@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Front Row PNG Preview</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Arial, sans-serif;
+      background: #151820;
+      color: #e7eaf0;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 16px 0 0;
+    }
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #bdc4d4;
+    }
+    input[type="range"] {
+      width: 160px;
+    }
+    button {
+      height: 30px;
+      border: 1px solid #3b4252;
+      background: #232936;
+      color: #eef2f8;
+      border-radius: 6px;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+    .stage {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: start;
+    }
+    .preview {
+      display: grid;
+      gap: 8px;
+      justify-items: start;
+    }
+    .name {
+      font-size: 13px;
+      color: #c8ceda;
+    }
+    canvas {
+      border: 1px solid #2f3748;
+      background-color: #2a2f3b;
+      background-image:
+        linear-gradient(45deg, #3f4656 25%, transparent 25%),
+        linear-gradient(-45deg, #3f4656 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #3f4656 75%),
+        linear-gradient(-45deg, transparent 75%, #3f4656 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+      image-rendering: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <h1>Front Row PNG Preview</h1>
+    <button id="toggle" type="button">Pause</button>
+    <label>FPS <input id="fps" type="range" min="3" max="18" value="10"> <span id="fpsValue">10</span></label>
+    <label>Scale <input id="scale" type="range" min="1" max="4" value="2"> <span id="scaleValue">2x</span></label>
+  </div>
+  <div id="stage" class="stage"></div>
+
+  <script>
+    const atlasUrl = "../final/front-row-clean.png";
+    const cell = 128;
+    const columns = 6;
+    const rows = [{"name": "walk-south-test", "row": 0}];
+
+    const image = new Image();
+    const stage = document.getElementById('stage');
+    const fpsInput = document.getElementById('fps');
+    const fpsValue = document.getElementById('fpsValue');
+    const scaleInput = document.getElementById('scale');
+    const scaleValue = document.getElementById('scaleValue');
+    const toggle = document.getElementById('toggle');
+    let paused = false;
+    let frame = 0;
+    let lastTick = 0;
+    const canvases = [];
+
+    function checker(ctx, width, height, block) {
+      ctx.fillStyle = '#2a2f3b';
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = '#3f4656';
+      for (let y = 0; y < height; y += block) {
+        for (let x = 0; x < width; x += block) {
+          if (((x / block) + (y / block)) % 2 === 0) {
+            ctx.fillRect(x, y, block, block);
+          }
+        }
+      }
+    }
+
+    function drawAll() {
+      const scale = Number(scaleInput.value);
+      for (const item of canvases) {
+        const size = cell * scale;
+        item.canvas.width = size;
+        item.canvas.height = size;
+        item.canvas.style.width = `${size}px`;
+        item.canvas.style.height = `${size}px`;
+        const ctx = item.canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        checker(ctx, size, size, 8 * scale);
+        ctx.drawImage(image, frame * cell, item.row * cell, cell, cell, 0, 0, size, size);
+      }
+    }
+
+    function tick(now) {
+      const interval = 1000 / Number(fpsInput.value);
+      if (!paused && now - lastTick >= interval) {
+        frame = (frame + 1) % columns;
+        lastTick = now;
+        drawAll();
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function build() {
+      for (const row of rows) {
+        const wrap = document.createElement('div');
+        wrap.className = 'preview';
+        const name = document.createElement('div');
+        name.className = 'name';
+        name.textContent = row.name;
+        const canvas = document.createElement('canvas');
+        wrap.append(name, canvas);
+        stage.append(wrap);
+        canvases.push({ row: row.row, canvas });
+      }
+      drawAll();
+      requestAnimationFrame(tick);
+    }
+
+    fpsInput.addEventListener('input', () => {
+      fpsValue.textContent = fpsInput.value;
+    });
+    scaleInput.addEventListener('input', () => {
+      scaleValue.textContent = `${scaleInput.value}x`;
+      drawAll();
+    });
+    toggle.addEventListener('click', () => {
+      paused = !paused;
+      toggle.textContent = paused ? 'Play' : 'Pause';
+    });
+
+    image.onload = build;
+    image.src = atlasUrl;
+  </script>
+</body>
+</html>

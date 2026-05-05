@@ -75,6 +75,7 @@ animations from this image."
 
 - `scripts/pixel_snap.py` — alpha threshold, palette quantization, pixelate-scale edge hardening
 - `scripts/alpha_from_bw_pair.py` — create transparent PNG alpha from matching black/white background renders
+- `scripts/export_png_loop_preview.py` — static HTML previews that loop PNG atlas frames without GIF dithering
 - `scripts/validate_character_sheet.py` — frame validation + contact-sheet generation
 - `scripts/export_animation_previews.py` — export GIF/PNG previews per animation row
 

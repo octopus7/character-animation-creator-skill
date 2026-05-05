@@ -1,0 +1,141 @@
+﻿{
+    "cell_size":  64,
+    "columns":  6,
+    "rows":  16,
+    "atlas_width":  384,
+    "atlas_height":  1024,
+    "direction_order":  [
+                            "south",
+                            "south-east",
+                            "east",
+                            "north-east",
+                            "north",
+                            "north-west",
+                            "west",
+                            "south-west"
+                        ],
+    "actions":  [
+                    {
+                        "name":  "walk",
+                        "frames":  6,
+                        "row_start":  0,
+                        "row_count":  8
+                    },
+                    {
+                        "name":  "attack",
+                        "frames":  6,
+                        "row_start":  8,
+                        "row_count":  8
+                    }
+                ],
+    "row_names":  [
+                      "walk-south",
+                      "walk-south-east",
+                      "walk-east",
+                      "walk-north-east",
+                      "walk-north",
+                      "walk-north-west",
+                      "walk-west",
+                      "walk-south-west",
+                      "attack-south",
+                      "attack-south-east",
+                      "attack-east",
+                      "attack-north-east",
+                      "attack-north",
+                      "attack-north-west",
+                      "attack-west",
+                      "attack-south-west"
+                  ],
+    "source_reference":  "pink twin-tail girl, white sailor-collar one-piece dress, bare legs, barefoot",
+    "generated_source":  "C:\\Users\\blendue\\.codex\\generated_images\\019df87b-16e3-7530-87d6-6c6e176078b8\\ig_09fd40ac4aa18bd80169f9fc813bc48191a2500cd2fb916ff7.png",
+    "normalized_from_detected_source_rows":  true,
+    "mirrored_rows_used":  true,
+    "source_row_map":  [
+                           {
+                               "row":  "walk-south",
+                               "source_row":  0,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "walk-south-east",
+                               "source_row":  1,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "walk-east",
+                               "source_row":  2,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "walk-north-east",
+                               "source_row":  4,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "walk-north",
+                               "source_row":  3,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "walk-north-west",
+                               "source_row":  4,
+                               "mirrored":  true
+                           },
+                           {
+                               "row":  "walk-west",
+                               "source_row":  2,
+                               "mirrored":  true
+                           },
+                           {
+                               "row":  "walk-south-west",
+                               "source_row":  1,
+                               "mirrored":  true
+                           },
+                           {
+                               "row":  "attack-south",
+                               "source_row":  6,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "attack-south-east",
+                               "source_row":  7,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "attack-east",
+                               "source_row":  11,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "attack-north-east",
+                               "source_row":  10,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "attack-north",
+                               "source_row":  12,
+                               "mirrored":  false
+                           },
+                           {
+                               "row":  "attack-north-west",
+                               "source_row":  10,
+                               "mirrored":  true
+                           },
+                           {
+                               "row":  "attack-west",
+                               "source_row":  11,
+                               "mirrored":  true
+                           },
+                           {
+                               "row":  "attack-south-west",
+                               "source_row":  7,
+                               "mirrored":  true
+                           }
+                       ],
+    "chroma_key":  "#00ff00",
+    "chroma_removed":  {
+                           "key_pixels_removed":  276310,
+                           "opaque_pixels_after":  116906,
+                           "residue_pixels_after":  0
+                       }
+}

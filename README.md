@@ -8,7 +8,7 @@ Watch the skill in action — generating a complete 128×128 character spriteshe
 ---
 
 **For:** Codex (OpenAI) and GPT Web Agent  
-**Purpose:** Generate game-ready 128×128 pixel-art character spritesheets with 8-direction animations from a text prompt or reference image.
+**Purpose:** Generate game-ready 128×128 anime-style character spritesheets with 8-direction animations from a text prompt or reference image.
 
 ## What It Does
 
@@ -20,7 +20,7 @@ animations from this image."
 Given a concept or reference image, this skill:
 
 1. **Establishes character identity** — species, class, silhouette, palette, weapon, outfit.
-2. **Generates a canonical base sprite** — a readable 128×128 pixel-art character.
+2. **Generates a canonical base sprite** — a readable high-density 128×128 anime game sprite.
 3. **Produces animation strips** — idle, walk, attack for all 8 directions (24 rows × 6 columns).
 4. **Runs pixel cleanup** — quantizes palettes, snaps edges, handles alpha.
 5. **Validates the atlas** — checks frame integrity and generates a contact sheet.

@@ -1,0 +1,18 @@
+﻿{
+  "ok": true,
+  "width": 768,
+  "height": 128,
+  "cell": 128,
+  "rows": 1,
+  "columns": 6,
+  "errors": [],
+  "warnings": [],
+  "cells": [
+    {"row": 0, "column": 0, "nontransparent_pixels": 8077, "edge_pixels": 0},
+    {"row": 0, "column": 1, "nontransparent_pixels": 7792, "edge_pixels": 0},
+    {"row": 0, "column": 2, "nontransparent_pixels": 7872, "edge_pixels": 0},
+    {"row": 0, "column": 3, "nontransparent_pixels": 7820, "edge_pixels": 0},
+    {"row": 0, "column": 4, "nontransparent_pixels": 7643, "edge_pixels": 0},
+    {"row": 0, "column": 5, "nontransparent_pixels": 7744, "edge_pixels": 0}
+  ]
+}

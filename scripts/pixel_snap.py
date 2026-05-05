@@ -44,7 +44,7 @@ def main() -> None:
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--cell", type=int, default=128)
-    parser.add_argument("--palette", type=int, default=32)
+    parser.add_argument("--palette", type=int, default=128)
     parser.add_argument("--alpha-threshold", type=int, default=24)
     parser.add_argument("--pixelate-scale", type=int, default=1)
     parser.add_argument("--scale-mode", choices=["nearest", "none"], default="nearest")

@@ -1,13 +1,13 @@
 ---
 name: game-character-128
-description: Create game-ready 128x128 pixel-art character spritesheets from text concepts, reference images, or existing character art. Use when Codex needs to design, generate, clean up, validate, and package 2D game characters with 8-direction movement, idle, walk/run, and attack animations for RPGs, top-down games, action games, tactics games, roguelikes, or sprite-based game prototypes.
+description: Create game-ready 128x128 anime-style character spritesheets from text concepts, reference images, or existing character art. Use when Codex needs to design, generate, clean up, validate, and package 2D game characters with 8-direction movement, idle, walk/run, and attack animations for RPGs, top-down games, action games, tactics games, roguelikes, or sprite-based game prototypes.
 ---
 
 # Game Character 128
 
 ## Overview
 
-Use this skill to produce game-character spritesheets with fixed `128x128` cells, 8-direction orientation, and attack animation rows. It builds on image generation for character art, then uses deterministic scripts for pixel cleanup and validation.
+Use this skill to produce game-character spritesheets with fixed `128x128` cells, 8-direction orientation, and attack animation rows. The preferred visual style is a clean, high-density anime game sprite that uses the available 128px cell space naturally, not a deliberately blocky low-resolution pixel-art sprite.
 
 Default output is an atlas plus QA files:
 
@@ -51,7 +51,7 @@ For smaller scopes, ask once or choose the smallest useful set:
 ## Workflow
 
 1. Establish character identity: species, class, silhouette, palette, weapon, outfit, and must-keep reference details.
-2. Create a canonical base sprite first. It should be a readable `128x128` pixel-art character, not a high-detail illustration.
+2. Create a canonical base sprite first. It should be a readable `128x128` anime game sprite with enough detail density for the cell size, not a tiny upscaled 32px/64px pixel sprite.
 3. Generate row strips for each animation row using the base sprite and any user reference images as grounding inputs.
 4. Keep the character identity locked across all rows: head shape, colors, outfit, weapon, proportions, and silhouette.
 5. Save generated strips under `generated/` and assemble or copy them into a grid atlas.
@@ -66,12 +66,30 @@ Use `$imagegen` for visual generation. Do not hand-draw missing animation frames
 Prompt row strips with:
 
 ```text
-128x128 pixel-art game sprite animation strip.
+128x128 clean anime game sprite animation strip.
 One row, <N> separated frames, <direction> direction, <action> action.
 Flat chroma-key background, no shadows, no floor, no UI, no text, no frame numbers.
 Preserve the canonical character identity exactly.
-Hard pixel-art edges, limited palette, readable silhouette.
+Use the full 128x128 cell density naturally: clean line art, soft cel shading, smooth readable hair and clothing shapes, and moderate detail.
+Do not make the sprite look like an upscaled low-resolution pixel sprite.
 ```
+
+## 128px Style Density
+
+The default visual target is not strict pixel art. Prefer:
+
+- clean anime sprite rendering with crisp but not blocky edges
+- soft cel shading and controlled antialiasing
+- readable facial features, hair strands, clothing folds, hands, feet, and accessories at 128px
+- enough scale to fill the cell while leaving safe padding
+- consistent line weight and palette across all frames
+
+Avoid:
+
+- oversized pixels, chunky stair-stepped edges, and forced 16-color palettes
+- heavy pixelation or downscale/upscale artifacts
+- tiny sprites centered in a large empty 128px cell
+- painterly blur, soft bloom, or semi-realistic rendering
 
 For transparent final assets, prefer the black/white matte workflow below over chroma key. Chroma key is acceptable for rough previews, but it can leave colored matte spill around antialiased edges.
 
@@ -111,14 +129,14 @@ python "<skill>/scripts/pixel_snap.py" \
   --input path/to/source.png \
   --output path/to/clean.png \
   --cell 128 \
-  --palette 32 \
+  --palette 128 \
   --scale-mode nearest \
   --alpha-threshold 24
 ```
 
-Use `--pixelate-scale 2` when the generated image is too smooth: it downscales and upscales with nearest-neighbor to harden edges.
+Do not use `--pixelate-scale` by default. Use it only if the user explicitly wants a stronger retro pixel-art look.
 
-Do not over-clean faces, eyes, hands, or weapon tips. If strict cleanup damages identity, rerun with a larger palette or no pixelate scale.
+Do not over-clean faces, eyes, hands, hair tips, dress folds, or weapon/effect tips. If cleanup damages identity or smooth 128px detail, rerun with a larger palette such as `192` or disable palette quantization with `--palette 0`.
 
 ## Chroma Key Handling
 
@@ -135,7 +153,7 @@ Recommended thresholds:
 edge flood threshold: 100-110 distance from key
 final residue threshold: 60-75 distance from key
 alpha threshold: 12 for detailed attack/VFX sheets, 24 for simpler characters
-palette: 96-128 for attack/VFX, 32-64 for simple idle/walk
+palette: 128-192 for natural 128px sprites, 96-128 for attack/VFX, 32-64 only for intentionally retro pixel-art sprites
 ```
 
 Block acceptance when near-exact chroma residue remains in fitted frames unless it is intentionally part of the sprite. A useful check is counting opaque pixels within distance `<= 72` of the key color.
@@ -197,7 +215,7 @@ For melee attacks, show anticipation, swing/contact, and recovery. Keep weapon a
 
 For ranged attacks, animate the character firing/casting, not the projectile traveling across the sheet. Detached projectiles should be separate VFX assets unless the user requests embedded attack effects.
 
-For magic attacks, keep glow and effects hard-edged, opaque, and close to the body or weapon. Avoid soft particles and transparent bloom.
+For magic attacks, keep glow and effects clean, readable, and close to the body or weapon. Avoid soft particles and transparent bloom that spill outside the cell.
 
 ## Engine Notes
 

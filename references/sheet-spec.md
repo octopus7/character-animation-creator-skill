@@ -62,7 +62,8 @@ Default atlas: `768x3072`, 6 columns x 24 rows.
 - no shadows, floor marks, dust trails, or motion blur
 - no detached VFX unless exported as a separate VFX sheet
 - character must remain fully inside each `128x128` frame
-- use readable silhouette over high detail
-- use 16-48 colors unless the user asks for a strict palette
+- use the 128px cell density naturally with clean anime sprite detail
+- avoid forced chunky pixel-art styling unless the user explicitly requests it
+- keep readable silhouette while preserving facial features, hair shape, outfit detail, hands, and feet
 - for final transparent output, prefer paired `#000000` and `#ffffff` background renders and derive alpha from the pair instead of using green chroma key
 

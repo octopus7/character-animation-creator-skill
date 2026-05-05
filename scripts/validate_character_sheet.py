@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a 64x64 game-character sprite atlas and optionally make a contact sheet."""
+"""Validate a fixed-cell game-character sprite atlas and optionally make a contact sheet."""
 
 from __future__ import annotations
 
@@ -56,7 +56,7 @@ def main() -> None:
     parser.add_argument("--input", required=True)
     parser.add_argument("--rows", type=int, required=True)
     parser.add_argument("--columns", type=int, required=True)
-    parser.add_argument("--cell", type=int, default=64)
+    parser.add_argument("--cell", type=int, default=128)
     parser.add_argument("--json-out", required=True)
     parser.add_argument("--contact-sheet")
     parser.add_argument("--min-pixels", type=int, default=80)
@@ -101,4 +101,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

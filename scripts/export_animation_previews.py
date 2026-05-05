@@ -145,7 +145,7 @@ def main() -> None:
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--rows", type=int, required=True)
     parser.add_argument("--columns", type=int, required=True)
-    parser.add_argument("--cell", type=int, default=64)
+    parser.add_argument("--cell", type=int, default=128)
     parser.add_argument("--scale", type=int, default=4)
     parser.add_argument("--duration", type=int, default=90)
     parser.add_argument("--prefix", default="row")

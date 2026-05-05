@@ -43,7 +43,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--cell", type=int, default=64)
+    parser.add_argument("--cell", type=int, default=128)
     parser.add_argument("--palette", type=int, default=32)
     parser.add_argument("--alpha-threshold", type=int, default=24)
     parser.add_argument("--pixelate-scale", type=int, default=1)

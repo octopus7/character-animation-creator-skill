@@ -1,13 +1,13 @@
 ---
-name: game-character-64
-description: Create game-ready 64x64 pixel-art character spritesheets from text concepts, reference images, or existing character art. Use when Codex needs to design, generate, clean up, validate, and package 2D game characters with 8-direction movement, idle, walk/run, and attack animations for RPGs, top-down games, action games, tactics games, roguelikes, or sprite-based game prototypes.
+name: game-character-128
+description: Create game-ready 128x128 pixel-art character spritesheets from text concepts, reference images, or existing character art. Use when Codex needs to design, generate, clean up, validate, and package 2D game characters with 8-direction movement, idle, walk/run, and attack animations for RPGs, top-down games, action games, tactics games, roguelikes, or sprite-based game prototypes.
 ---
 
-# Game Character 64
+# Game Character 128
 
 ## Overview
 
-Use this skill to produce game-character spritesheets with `64x64` cells, 8-direction orientation, and attack animation rows. It builds on image generation for character art, then uses deterministic scripts for pixel cleanup and validation.
+Use this skill to produce game-character spritesheets with fixed `128x128` cells, 8-direction orientation, and attack animation rows. It builds on image generation for character art, then uses deterministic scripts for pixel cleanup and validation.
 
 Default output is an atlas plus QA files:
 
@@ -39,23 +39,24 @@ walk-<direction>    6 frames each
 attack-<direction>  6 frames each
 ```
 
-This is `24 rows x 6 columns` if idle rows are padded to 6 cells. At `64x64`, the default atlas is `384x1536`.
+This is `24 rows x 6 columns` if idle rows are padded to 6 cells. At `128x128`, the default atlas is `768x3072`.
 
 For smaller scopes, ask once or choose the smallest useful set:
 
-- `walk-only`: 8 rows x 6 frames
-- `idle-walk`: 16 rows x 6 frames
-- `combat`: idle, walk, attack for all 8 directions
+- `walk-only`: 8 rows x 6 frames, `768x1024`
+- `idle-walk`: 16 rows x 6 frames, `768x2048`
+- `walk-attack`: 16 rows x 6 frames, `768x2048`
+- `combat`: idle, walk, attack for all 8 directions, `768x3072`
 
 ## Workflow
 
 1. Establish character identity: species, class, silhouette, palette, weapon, outfit, and must-keep reference details.
-2. Create a canonical base sprite first. It should be a readable `64x64` pixel-art character, not a high-detail illustration.
+2. Create a canonical base sprite first. It should be a readable `128x128` pixel-art character, not a high-detail illustration.
 3. Generate row strips for each animation row using the base sprite and any user reference images as grounding inputs.
 4. Keep the character identity locked across all rows: head shape, colors, outfit, weapon, proportions, and silhouette.
 5. Save generated strips under `generated/` and assemble or copy them into a grid atlas.
 6. Run `scripts/pixel_snap.py` on the atlas or individual frames.
-7. Run `scripts/validate_64_sheet.py` and create a contact sheet.
+7. Run `scripts/validate_character_sheet.py` and create a contact sheet.
 8. If validation fails, regenerate only the failing row or frame group.
 
 ## Image Generation Rules
@@ -65,7 +66,7 @@ Use `$imagegen` for visual generation. Do not hand-draw missing animation frames
 Prompt row strips with:
 
 ```text
-64x64 pixel-art game sprite animation strip.
+128x128 pixel-art game sprite animation strip.
 One row, <N> separated frames, <direction> direction, <action> action.
 Flat chroma-key background, no shadows, no floor, no UI, no text, no frame numbers.
 Preserve the canonical character identity exactly.
@@ -109,7 +110,7 @@ Run pixel cleanup after generation:
 python "<skill>/scripts/pixel_snap.py" \
   --input path/to/source.png \
   --output path/to/clean.png \
-  --cell 64 \
+  --cell 128 \
   --palette 32 \
   --scale-mode nearest \
   --alpha-threshold 24
@@ -124,7 +125,7 @@ Do not over-clean faces, eyes, hands, or weapon tips. If strict cleanup damages 
 Use chroma key only when black/white matte output is unavailable or for quick preview assets. For generated animation strips, remove chroma key in two passes:
 
 1. Edge-connected flood removal: remove only chroma-key pixels connected to the image border.
-2. Final residue cleanup: after each frame is fitted into `64x64`, remove only near-exact key pixels.
+2. Final residue cleanup: after each frame is fitted into `128x128`, remove only near-exact key pixels.
 
 Do not globally delete all green-ish pixels. Many fantasy, magic, poison, robot, and cyber characters use green as part of the sprite. For green characters or green VFX, prefer magenta `#ff00ff` as the generated background.
 
@@ -170,17 +171,18 @@ This writes transparent animated WebP, transparent GIF with `disposal=2`, checke
 Validate atlas geometry and frame content:
 
 ```bash
-python "<skill>/scripts/validate_64_sheet.py" \
+python "<skill>/scripts/validate_character_sheet.py" \
   --input path/to/character-sheet-clean.png \
   --rows 24 \
   --columns 6 \
+  --cell 128 \
   --json-out path/to/qa/validation.json \
   --contact-sheet path/to/qa/contact-sheet.png
 ```
 
 Block acceptance when:
 
-- atlas dimensions do not equal `columns*64` by `rows*64`
+- atlas dimensions do not equal `columns*128` by `rows*128`
 - required frames are empty
 - sprites touch cell edges unexpectedly
 - chroma-key color remains as opaque pixels

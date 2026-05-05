@@ -1,8 +1,8 @@
-# 64x64 Character Sheet Spec
+# 128x128 Character Sheet Spec
 
 ## Default Combat Sheet
 
-Cell size: `64x64`.
+Cell size: fixed `128x128`.
 
 Directions:
 
@@ -54,14 +54,14 @@ attack-west
 attack-south-west
 ```
 
-Default atlas: `384x1536`, 6 columns x 24 rows.
+Default atlas: `768x3072`, 6 columns x 24 rows.
 
 ## Prompt Constraints
 
 - no text, UI, labels, numbers, frame borders, or guide lines
 - no shadows, floor marks, dust trails, or motion blur
 - no detached VFX unless exported as a separate VFX sheet
-- character must remain fully inside each `64x64` frame
+- character must remain fully inside each `128x128` frame
 - use readable silhouette over high detail
 - use 16-48 colors unless the user asks for a strict palette
 - for final transparent output, prefer paired `#000000` and `#ffffff` background renders and derive alpha from the pair instead of using green chroma key
